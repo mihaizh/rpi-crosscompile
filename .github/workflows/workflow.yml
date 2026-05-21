@@ -41,4 +41,4 @@ jobs:
           cacheFrom: ${{ env.IMAGE_NAME }}
           push: ${{ github.event_name != 'pull_request' }}
           runCmd: |
-            ./src/run-test.sh
+            cd src && ./run-test.sh
