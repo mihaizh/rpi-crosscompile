@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+chroot /opt/rpi-sysroot apt-get "$@"

@@ -1,0 +1,8 @@
+{
+    "name": "raspberry-pi-cross",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+    "remoteUser": "vscode"
+}

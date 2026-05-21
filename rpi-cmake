@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+exec cmake \
+  -DCMAKE_TOOLCHAIN_FILE="${RPI_TOOLCHAIN_FILE:-/opt/toolchains/rpi-aarch64.cmake}" \
+  "$@"
