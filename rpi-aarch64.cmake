@@ -7,6 +7,7 @@ set(CMAKE_SYSROOT ${RPI_SYSROOT})
 set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)
 set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++)
 
+set(CMAKE_SYSROOT_LINK "${RPI_SYSROOT}")
 set(CMAKE_FIND_ROOT_PATH ${RPI_SYSROOT})
 
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
@@ -18,3 +19,12 @@ set(PKG_CONFIG_EXECUTABLE pkg-config)
 set(ENV{PKG_CONFIG_SYSROOT_DIR} ${RPI_SYSROOT})
 set(ENV{PKG_CONFIG_LIBDIR}
     ${RPI_SYSROOT}/usr/lib/aarch64-linux-gnu/pkgconfig:${RPI_SYSROOT}/usr/share/pkgconfig)
+
+set(RPI_RPATH_LINK_FLAGS
+    "-Wl,-rpath-link,${RPI_SYSROOT}/lib/aarch64-linux-gnu \
+     -Wl,-rpath-link,${RPI_SYSROOT}/usr/lib/aarch64-linux-gnu"
+)
+
+set(CMAKE_EXE_LINKER_FLAGS_INIT "${RPI_RPATH_LINK_FLAGS}")
+set(CMAKE_SHARED_LINKER_FLAGS_INIT "${RPI_RPATH_LINK_FLAGS}")
+set(CMAKE_MODULE_LINKER_FLAGS_INIT "${RPI_RPATH_LINK_FLAGS}")

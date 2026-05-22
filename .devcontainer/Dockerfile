@@ -2,6 +2,7 @@ FROM mcr.microsoft.com/devcontainers/cpp:debian-12
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV RPI_SYSROOT=/opt/rpi-sysroot
+ENV QEMU_LD_PREFIX=/opt/rpi-sysroot
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates curl gnupg debootstrap qemu-user-static \
@@ -45,6 +46,9 @@ COPY rpi-aarch64.cmake /opt/toolchains/
 
 COPY rpi-cmake /usr/local/bin/
 RUN chmod +x /usr/local/bin/rpi-cmake
+
+COPY rpi-fix-symlinks /usr/local/bin/
+RUN chmod +x /usr/local/bin/rpi-fix-symlinks
 
 # Install target packages into the ARM64 sysroot.
 RUN rpi-apt-get update \

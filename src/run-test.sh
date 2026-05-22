@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+sudo rpi-apt-get update
+sudo rpi-apt-get install libopencv-dev
+
 mkdir -p build
 cd build
 

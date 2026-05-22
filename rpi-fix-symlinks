@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+import os
+import sys
+from pathlib import Path
+
+if len(sys.argv) != 2:
+    raise SystemExit(f"usage: {sys.argv[0]} SYSROOT")
+
+sysroot = Path(sys.argv[1]).resolve()
+rewritten = 0
+
+for dirpath, dirnames, filenames in os.walk(sysroot):
+    for name in dirnames + filenames:
+        link = Path(dirpath) / name
+        if not link.is_symlink():
+            continue
+
+        target = os.readlink(link)
+        if not target.startswith("/"):
+            continue
+
+        target_in_sysroot = sysroot / target.lstrip("/")
+        relative_target = os.path.relpath(target_in_sysroot, start=link.parent)
+
+        link.unlink()
+        link.symlink_to(relative_target)
+        rewritten += 1
+
+# print(f"rewrote {rewritten} absolute symlink(s) in {sysroot}")

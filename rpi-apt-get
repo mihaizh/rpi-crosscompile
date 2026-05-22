@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+if [[ $EUID -ne 0 ]]; then
+    echo "rpi-apt-get must run as root." >&2
+    exit 1
+fi
+
+cp -L /etc/resolv.conf /opt/rpi-sysroot/etc/resolv.conf
+
 chroot /opt/rpi-sysroot apt-get "$@"
+rpi-fix-symlinks /opt/rpi-sysroot
