@@ -2,7 +2,7 @@
 set -euo pipefail
 
 sudo rpi-apt-get update
-sudo rpi-apt-get install libopencv-dev
+sudo rpi-apt-get install -y --no-install-recommends libopencv-dev
 
 mkdir -p build
 cd build
